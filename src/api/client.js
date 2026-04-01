@@ -1,7 +1,8 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 
-const API_URL = 'http://192.168.1.47:5000/api'; // Adjust IP if necessary
+const API_URL = 'http://192.168.1.47:5000/api/';
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -21,6 +22,20 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor for debugging
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('API Error:', {
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      message: error.message,
+    });
     return Promise.reject(error);
   }
 );

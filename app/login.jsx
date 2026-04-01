@@ -19,12 +19,15 @@ export default function Login() {
 
     setIsSubmitting(true);
     try {
+      console.log('Submitting login for:', loginEmail);
       const result = await login(loginEmail, loginPass);
+      console.log('Login result:', result.success ? 'Success' : 'Failure - ' + result.message);
       if (!result.success) {
         Alert.alert('Login Failed', result.message);
       }
       // Success is handled by AuthContext redirecting to '/'
     } catch (error) {
+      console.error('Login screen crash:', error);
       Alert.alert('Error', 'Something went wrong. Please check your connection.');
     } finally {
       setIsSubmitting(false);
@@ -39,7 +42,7 @@ export default function Login() {
       case 'Admin': demoEmail = 'jennifer@companybull.com'; break;
       case 'HR': demoEmail = 'lisa@companybull.com'; break;
       case 'Manager': demoEmail = 'sarah@companybull.com'; break;
-      case 'Employee': demoEmail = 'emily@companybull.com'; break;
+      case 'Employee': demoEmail = 'yasir@companybull.com'; break;
     }
     
     setEmail(demoEmail);
